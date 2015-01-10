@@ -12,7 +12,8 @@
       "bootstrap-select": "git@github.com:silviomoreto/bootstrap-select.git",
       "backbone": "git@github.com:jashkenas/backbone.git",
       "marionette": "git@github.com:marionettejs/backbone.marionette.git",
-      "underscore": "git@github.com:jashkenas/underscore.git"
+      "underscore": "git@github.com:jashkenas/underscore.git",
+      "rivets": "git@github.com:mikeric/rivets.git"
 
     }
   }
