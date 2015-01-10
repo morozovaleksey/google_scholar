@@ -23,18 +23,18 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
       e.preventDefault()
       console.log "Submit"
       console.log @queryModel.set
-        "all_words": @$el.find('#all_words').val()
+        "allWords": @$el.find('#all_words').val()
         "collocation": @$el.find('#collocation').val()
-        "word_title": @$el.find('#word_title').val()
-        "words_title": @$el.find('#words_title').val()
-      if @$el.find('#file_type').val() == "Тип файлов выдачи"
+        "wordTitle": @$el.find('#word_title').val()
+        "wordsTitle": @$el.find('#words_title').val()
+      if @$el.find('#file_type').val() == "Тип файлов"
         @queryModel.set
-          "fyle_type": ''
+          "fyleType": ""
       else
         @queryModel.set
-          "fyle_type": @$el.find('#file_type').val()
+          "fyleType": @$el.find('#file_type').val()
       @trigger 'query:sent:click'
-#      theme = $('#theme option:selected').val()
+#      theme = $('#theme option:selecTted').val()
 
 #      console.log query = all_words+ ' ' + collocation+ ' '
 #    onRender: ->

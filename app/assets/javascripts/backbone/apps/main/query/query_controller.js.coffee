@@ -15,23 +15,29 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
       console.log layoutView.queryModel = @queryModel
       console.log layoutView
       layoutView.on 'query:sent:click', =>
-        all_words = @queryModel.attributes.all_words
-        if @queryModel.attributes.word_title == ""
+        allWords = @queryModel.attributes.allWords
+        if @queryModel.attributes.collocation == ""
           collocation = @queryModel.attributes.collocation
         else
           collocation = "\"#{@queryModel.attributes.collocation}\""
-        if @queryModel.attributes.word_title == ""
-          word_title = @queryModel.attributes.word_title
+        if @queryModel.attributes.wordTitle == ""
+          wordTitle = @queryModel.attributes.wordTitle
         else
-          word_title = "intitle:#{@queryModel.attributes.word_title}"
-        if @queryModel.attributes.words_title == ""
-          words_title = @queryModel.attributes.words_title
+          wordTitle = "intitle:#{@queryModel.attributes.wordTitle}"
+        if @queryModel.attributes.wordsTitle == ""
+          wordsTitle = @queryModel.attributes.wordsTitle
         else
-          words_title = "allintitle:#{@queryModel.attributes.words_title}"
-
-#        console.log queryString = "#{@queryModel.attributes.all_words} \"#{@queryModel.attributes.collocation}\" intitle:#{@queryModel.attributes.word_title}"
-        console.log queryString = "#{all_words} #{collocation} #{word_title} #{words_title}"
-        console.log queryString.replace(/\s+/g," ")
+          wordsTitle = "allintitle:#{@queryModel.attributes.wordsTitle}"
+        if @queryModel.attributes.fyleType == ""
+          fyleType = @queryModel.attributes.fyleType
+        else
+          fyleType = "filetype:#{@queryModel.attributes.fyleType}"
+        queryString = "#{allWords} #{collocation} #{wordTitle} #{wordsTitle} #{fyleType}"
+        queryString = queryString.replace(/\s+/g," ")
+        queryString = $.trim(queryString)
+        queryString = encodeURIComponent(queryString)
+        url = 'http://scholar.google.com/scholar?q='+queryString
+        window.open(url,'GScholar')
 
 
 
