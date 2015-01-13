@@ -44,5 +44,6 @@ gem "rabl"
 gem "gon"
 gem 'nokogiri'
 gem 'httparty'
+gem "js-routes"
 
 

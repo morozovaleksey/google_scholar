@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110175601) do
+ActiveRecord::Schema.define(version: 20150113222441) do
+
+  create_table "science_areas", force: true do |t|
+    t.string   "science_area_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "science_subjects", force: true do |t|
+    t.integer  "science_areas_id"
+    t.string   "science_subject_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "science_subjects", ["science_areas_id"], name: "index_science_subjects_on_science_areas_id"
+
+  create_table "science_terms", force: true do |t|
+    t.integer  "science_subjects_id"
+    t.string   "term_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "science_terms", ["science_subjects_id"], name: "index_science_terms_on_science_subjects_id"
 
   create_table "subject_areas", force: true do |t|
     t.string   "subject_area_name"

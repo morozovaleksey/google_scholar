@@ -18,7 +18,7 @@
 //= require bootstrap/dist/js/bootstrap
 
 //= require bootstrap-select/dist/js/bootstrap-select
-
+//= require js-routes
 // Backbone
 //= require backbone/backbone
 //= require marionette/lib/backbone.marionette

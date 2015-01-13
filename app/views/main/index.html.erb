@@ -45,11 +45,12 @@
       <hr>
       <div id="search-region">
         <h2>Найти статьи</h2>
-      <form role="form" action="http://scholar.google.com.ua/">
+        <%= form_for :query, url:parse_path do |f| %>
           <div class="well">
             <h4>в которых встречаются все слова</h4>
             <div class="input-group">
-              <input type="text" class="form-control" id="all_words">
+              <%= f.text_field :all_words, id:'all_words', class: 'form-control' %>
+              <!--<input type="text" class="form-control" id="all_words">-->
                             <!--<span class="input-group-btn">-->
                                 <!--&lt;!&ndash;<button class="btn btn-default" type="button">&ndash;&gt;-->
                                   <!--&lt;!&ndash;<span class="glyphicon glyphicon-search"></span>&ndash;&gt;-->
@@ -61,7 +62,8 @@
         <div class="well">
           <h4>в которых встречаются словосочетания</h4>
           <div class="input-group">
-            <input type="text" class="form-control" id="collocation">
+            <%= f.text_field :collocation, id:'collocation', class: 'form-control' %>
+            <!--<input type="text" class="form-control" id="collocation">-->
             <!--<span class="input-group-btn">-->
             <!--&lt;!&ndash;<button class="btn btn-default" type="button">&ndash;&gt;-->
             <!--&lt;!&ndash;<span class="glyphicon glyphicon-search"></span>&ndash;&gt;-->
@@ -74,7 +76,8 @@
         <div class="well">
           <h4>Слово в заголовке статьи</h4>
           <div class="input-group">
-            <input type="text" class="form-control" id="word_title">
+            <%= f.text_field :word_title, id:'word_title', class: 'form-control' %>
+            <!--<input type="text" class="form-control" id="word_title">-->
             <!--<span class="input-group-btn">-->
             <!--&lt;!&ndash;<button class="btn btn-default" type="button">&ndash;&gt;-->
             <!--&lt;!&ndash;<span class="glyphicon glyphicon-search"></span>&ndash;&gt;-->
@@ -87,7 +90,8 @@
         <div class="well">
           <h4>Все слова в заголовке статьи</h4>
           <div class="input-group">
-            <input type="text" class="form-control" id="words_title">
+            <%= f.text_field :words_title, id:'words_title', class: 'form-control' %>
+            <!--<input type="text" class="form-control" id="words_title">-->
             <!--<span class="input-group-btn">-->
             <!--&lt;!&ndash;<button class="btn btn-default" type="button">&ndash;&gt;-->
             <!--&lt;!&ndash;<span class="glyphicon glyphicon-search"></span>&ndash;&gt;-->
@@ -98,13 +102,15 @@
         </div>
         <div class="well">
           <h4>Тип файлов выдачи</h4>
-          <select class="selectpicker" id="file_type">
-            <option>Тип файлов</option>
-            <option>pdf</option>
-            <option>doc</option>
-            <!--<option></option>-->
-            <!--<option></option>-->
-          </select>
+          <!--<%= f.select :file_type,[ 'PDF', 'DOC'], prompt: 'Тип файлов', id: 'file_type', class: 'selectpicker'  %>-->
+          <%= f.select(:file_type, ['PDF', 'DOC'], {include_blank: "Тип файлов"}, { :class => 'selectpicker', :id => 'file_type' }) %>
+          <!--<select class="selectpicker" id="file_type">-->
+            <!--<option>Тип файлов</option>-->
+            <!--<option>pdf</option>-->
+            <!--<option>doc</option>-->
+            <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option></option>&ndash;&gt;-->
+          <!--</select>-->
           <!--<div class="input-group">-->
             <!--<input type="text" class="form-control" id="file_type">-->
             <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
@@ -117,20 +123,13 @@
         </div>
         <div class="well">
               <h4>Выберите область поиска</h4>
-                <select class="selectpicker" id="area">
-                  <option>Выберите облать поиска</option>
-                  <% @science.each_value do |array| %>
-                      <option> <%= array %> </option>
+                  <%= f.select(:area, [], {include_blank: "Выберите облать поиска"}, { :id => 'area' })  do %>
+                    <% @science_area.each do |area| %>
+                        <option> <%= area[:name] %> </option>
+                    <% end %>
                   <% end %>
-                  <!--<option>Информатика</option>-->
-                  <!--<option>Математика</option>-->
-                </select>
-              <select class="selectpicker" id="theme">
-                <option>Выберите облать поиска</option>
-                <!--<option>Программирование</option>-->
-                <!--<option></option>-->
-                <!--<option></option>-->
-              </select>
+                  <%= f.select(:subject, [], {include_blank: "Выберите облать поиска"}, { :id => 'subject' }) %>
+                  <%= f.select(:term, [], {include_blank: "Выберите облать поиска"}, { :id => 'term' }) %>
 
         </div>
         <div class="well">
@@ -144,13 +143,14 @@
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Отправить запрос</button>
-      </form>
+      <% end %>
       </div>
 
-
       <hr>
+    </div>
+    <div class="col-lg-8">
 
-  </div>
+    </div>
   <!-- /.row -->
   <!-- Footer -->
   <footer>
@@ -162,7 +162,8 @@
     <!-- /.row -->
   </footer>
 
-    </div>
+  </div>
 </div>
 
 <!-- /.container -->
+
