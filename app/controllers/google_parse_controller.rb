@@ -16,16 +16,38 @@ class GoogleParseController < ApplicationController
     if query['words_title']== ""
       words_title = query['words_title']
     else
-      words_title = "intitle:#{query['words_title']}"
+     words_title = "intitle:#{query['words_title']}"
     end
     if query['file_type']==""
-      file_type = query['fyle_type']
+      file_type = query['file_type']
     else
-      file_type = "filetype:#{query['fyle_type']}"
+     file_type = "filetype:#{query['file_type']}"
     end
-    term = "\"#{query['term']}\""
-    query_string = "#{all_words} #{collocation} #{word_title} #{words_title} #{file_type} #{term}"
-    @count = parsing  query_string
+    if query['check_area'] == "1"
+      if query['area'] != 'Выберите облать поиска'
+        area = "\"#{query['area']}\""
+      end
+    else
+      area = ''
+    end
+    if query['check_subject'] == "1"
+      if query['subject'] != 'Выберите облать поиска'
+        subject = "\"#{query['subject']}\""
+      end
+    else
+      subject = ''
+    end
+    if query['check_term'] == "1"
+      if query['term'] != 'Выберите облать поиска'
+        term = "\"#{query['term']}\""
+      end
+    else
+      term = ''
+    end
+
+    query_string = "#{all_words} #{collocation} #{word_title} #{words_title} #{file_type} #{area} #{subject} #{term}"
+    render text: query_string.strip
+    # @count = parsing  query_string
   end
 
   def parsing query_string

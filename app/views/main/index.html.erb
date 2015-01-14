@@ -123,14 +123,19 @@
         </div>
         <div class="well">
               <h4>Выберите область поиска</h4>
-                  <%= f.select(:area, [], {include_blank: "Выберите облать поиска"}, { :id => 'area' })  do %>
+                  <%= f.select(:area, [], {include_blank: "Выберите облать поиска"}, { :class => 'form-control', :id => 'area' })  do %>
                     <% @science_area.each do |area| %>
                         <option> <%= area[:name] %> </option>
                     <% end %>
                   <% end %>
-                  <%= f.select(:subject, [], {include_blank: "Выберите облать поиска"}, { :id => 'subject' }) %>
-                  <%= f.select(:term, [], {include_blank: "Выберите облать поиска"}, { :id => 'term' }) %>
-
+                  <%= f.label :label_check_area, "Включить слово в запрос" %>
+                  <%= f.check_box :check_area, id: 'check_area' %>
+                  <%= f.select(:subject, [], {include_blank: "Выберите облать поиска"}, { :class => 'form-control',:id => 'subject' })%>
+                  <%= f.label :label_check_subject, "Включить слово в запрос" %>
+                  <%= f.check_box :check_subject, id: 'check_subject' %>
+                  <%= f.select(:term, [], {include_blank: "Выберите облать поиска"}, {:class => 'form-control', :id => 'term' }) %>
+                  <%= f.label :label_check_subject, "Включить слово в запрос", { :id => 'label_check_subject', :class => 'radio-inline>'} %>
+                  <%= f.check_box :check_term, id: 'check_term' %>
         </div>
         <div class="well">
           <h4>Отсеить слова,которые не касаются вашей предметной области?</h4>
