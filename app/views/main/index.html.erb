@@ -128,24 +128,42 @@
                         <option> <%= area[:name] %> </option>
                     <% end %>
                   <% end %>
-                  <%= f.label :label_check_area, "Включить слово в запрос" %>
-                  <%= f.check_box :check_area, id: 'check_area' %>
+                  <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_area, id: 'check_area' %>Включить слово в запрос
+                  <% end %>
                   <%= f.select(:subject, [], {include_blank: "Выберите облать поиска"}, { :class => 'form-control',:id => 'subject' })%>
-                  <%= f.label :label_check_subject, "Включить слово в запрос" %>
-                  <%= f.check_box :check_subject, id: 'check_subject' %>
+                  <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
+                  <%= f.check_box :check_subject, id: 'check_subject' %>Включить слово в запрос
+                  <% end %>
                   <%= f.select(:term, [], {include_blank: "Выберите облать поиска"}, {:class => 'form-control', :id => 'term' }) %>
-                  <%= f.label :label_check_subject, "Включить слово в запрос", { :id => 'label_check_subject', :class => 'radio-inline>'} %>
-                  <%= f.check_box :check_term, id: 'check_term' %>
+                  <%= f.label :label_check_subject,{:class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_term, id: 'check_term' %>Включить слово в запрос
+                  <% end %>
         </div>
         <div class="well">
           <h4>Отсеить слова,которые не касаются вашей предметной области?</h4>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" checked="checked"> да
-              </br>
-              <input type="checkbox"> нет
-            </label>
-          </div>
+          <%= f.select(:unnecessary_area, [], {include_blank: "Выберите облать поиска"}, { :class => 'form-control', :id => 'unnecessary_area' })  do %>
+              <% @science_area.each do |area| %>
+                  <option> <%= area[:name] %> </option>
+              <% end %>
+          <% end %>
+          <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
+              <%= f.check_box :check_unnecessary_area, id: 'check_unnecessary_area' %>Включить слово в запрос
+          <% end %>
+          <%= f.select(:unnecessary_subject, [], {include_blank: "Выберите облать поиска"}, { :class => 'form-control',:id => 'unnecessary_subject' })%>
+          <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
+              <%= f.check_box :check_unnecessary_subject, id: 'check_unnecessary_subject' %>Включить слово в запрос
+          <% end %>
+
+          <br>
+          <%= f.select(:unnecessary_terms, [], {include_blank: "Выберите слова"}, {:class => 'selectpicker', :id => 'unnecessary_terms', 'data-live-search' => 'true', :multiple => '', :title =>'Выберите слова' }) do %>
+
+          <% end %>
+          <br>
+          <%= f.label :label_check_term,{ :class => 'checkbox-inline'} do %>
+              <%= f.check_box :check_unnecessary_term, id: 'check_unnecessary_term' %>Включить слова в запрос
+          <% end %>
+
         </div>
         <button type="submit" class="btn btn-primary">Отправить запрос</button>
       <% end %>

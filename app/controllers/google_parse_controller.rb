@@ -24,29 +24,65 @@ class GoogleParseController < ApplicationController
      file_type = "filetype:#{query['file_type']}"
     end
     if query['check_area'] == "1"
-      if query['area'] != 'Выберите облать поиска'
+      if query['area'] != ""
         area = "\"#{query['area']}\""
       end
     else
-      area = ''
+      area = ""
     end
     if query['check_subject'] == "1"
-      if query['subject'] != 'Выберите облать поиска'
+      if query['subject'] != ""
         subject = "\"#{query['subject']}\""
       end
     else
-      subject = ''
+      subject = ""
     end
     if query['check_term'] == "1"
-      if query['term'] != 'Выберите облать поиска'
+      if query['term'] != ""
         term = "\"#{query['term']}\""
       end
     else
-      term = ''
+      term = ""
     end
-
-    query_string = "#{all_words} #{collocation} #{word_title} #{words_title} #{file_type} #{area} #{subject} #{term}"
-    render text: query_string.strip
+    ###############################################
+    if query['check_unnecessary_area'] == "1"
+      if query['unnecessary_area'] != ""
+        unnecessary_area = query['unnecessary_area']
+        unnecessary_area = unnecessary_area.split(" ")
+        unnecessary_area.each_with_index do|area,index|
+          unnecessary_area[index] = "-#{area}"
+        end
+        unnecessary_area = unnecessary_area.map{ |i|  %Q(#{i}) }.join(' ')
+      end
+    else
+      unnecessary_area = ""
+    end
+    if query['check_unnecessary_subject'] == "1"
+      if query['unnecessary_subject'] != ""
+        unnecessary_subject = query['unnecessary_subject']
+        unnecessary_subject = unnecessary_subject.split(" ")
+        unnecessary_subject.each_with_index do|subject,index|
+          unnecessary_subject[index] = "-#{subject}"
+        end
+        unnecessary_subject = unnecessary_subject.map{ |i|  %Q(#{i}) }.join(' ')
+      end
+    else
+      unnecessary_subject = ""
+    end
+    query_unnecessary_terms = query['unnecessary_terms'].reject(&:empty?)
+    unnecessary_term = []
+    if query['check_unnecessary_term'] == "1"
+      query_unnecessary_terms.each_with_index do |term, index|
+          unnecessary_term[index] = "-#{term}"
+      end
+      unnecessary_term.reject(&:empty?)
+      unnecessary_term = unnecessary_term.map{ |i|  %Q(#{i}) }.join(' ')
+    else
+      unnecessary_term = ""
+    end
+    query_string = "#{all_words} #{collocation} #{word_title} #{words_title} #{file_type}
+     #{area} #{subject} #{term} #{unnecessary_area} #{unnecessary_subject} #{unnecessary_term}"
+    render json: query_string.strip
     # @count = parsing  query_string
   end
 

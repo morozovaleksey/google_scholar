@@ -9,6 +9,8 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
 #      @$el.find('#theme').find('.selectpicker').find('option')
       @subjectSelect()
       @termSelect()
+      @unnecessarySubjectSelect()
+      @unnecessaryTermSelect()
 
     dropdownListArea: ->
       area = @$el.find('#area')
@@ -42,6 +44,9 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
 
 #      console.log query = all_words+ ' ' + collocation+ ' '
     subjectSelect: ->
+      $("#area").val($("#select option:first").val())
+      $("#subject").val($("#select option:first").val())
+      $("#term").val($("#select option:first").val())
       @$el.find('#area').change =>
         $('#subject').find('option:not(:first)').remove()
         $('#term').find('option:not(:first)').remove()
@@ -55,7 +60,7 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
             url: Routes.related_subjects_path({ format: 'json', name: @$el.find('#area').val(), science_id: scienceId  })
             reset: true
           @areaModel.on "sync", =>
-            console.log @$el.find('#subject').val()
+            console.log @areaModel.attributes
             _(@areaModel.attributes).each (value,key) =>
               console.log subject = value.science_subject_name
               @valueSubjectId = value.id
@@ -68,7 +73,6 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
         _(@areaModel.attributes).each (value,key) =>
           if value.science_subject_name == @$el.find('#subject').val()
             @valueSubjectId = value.id
-          $("#subject").append( $("<option value=\"#{value.id}\">#{value.science_subject_name}</option>"))
         if @$el.find('#subject').val() != ""
           response = subjectModel.fetch
             url: Routes.related_terms_path({ format: 'json', name: @$el.find('#subject option:selected').text() , subject_id: @valueSubjectId   })
@@ -77,8 +81,49 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
             _(subjectModel.attributes).each (value,key) =>
               $("#term").append( $("<option>#{value.term_name}</option>"))
 
-#    onRender: ->
-#      rivets.bind @$el, { query: @model }
+    unnecessarySubjectSelect: ->
+      $("#unnecessary_area").val($("#select option:first").val())
+      $("#unnecessary_subject").val($("#select option:first").val())
+#      $("#unnecessary_terms").val($("#select option:first").val())
+      @$el.find('#unnecessary_area').change =>
+        $('#unnecessary_subject').find('option:not(:first)').remove()
+        $('#unnecessary_terms').find('option:not(:first)').remove()
+        @unnecessaryAreaModel = App.request "scienceArea:model"
+        scienceId = ""
+        _(gon.science_area).each (value,key) =>
+          if value.name == @$el.find('#unnecessary_area').val()
+            scienceId = value.id
+        if scienceId != ""
+          response = @unnecessaryAreaModel.fetch
+            url: Routes.related_subjects_path({ format: 'json', name: @$el.find('#area').val(), science_id: scienceId  })
+            reset: true
+          @unnecessaryAreaModel.on "sync", =>
+            console.log @unnecessaryAreaModel.attributes
+            _(@unnecessaryAreaModel.attributes).each (value,key) =>
+              console.log subject = value.science_subject_name
+              @valueSubjectId = value.id
+              $("#unnecessary_subject").append( $("<option>#{value.science_subject_name}</option>"))
+    unnecessaryTermSelect: ->
+      @$el.find('#unnecessary_subject').change =>
+        $('#unnecessary_terms').find('option:not(:first)').remove()
+        unnecessarySubjectModel = App.request "scienceSubject:model"
+        _(@unnecessaryAreaModel.attributes).each (value,key) =>
+          if value.science_subject_name == @$el.find('#unnecessary_subject').val()
+            @valueSubjectId = value.id
+        if @$el.find('#unnecessary_subject').val() != ""
+          response = unnecessarySubjectModel.fetch
+            url: Routes.related_terms_path({ format: 'json', name: @$el.find('#unnecessary_subject option:selected').text() , subject_id: @valueSubjectId   })
+            reset: true
+          unnecessarySubjectModel.on "sync", =>
+
+            _(unnecessarySubjectModel.attributes).each (value,key) =>
+              console.log value.term_name
+              $("#unnecessary_terms").append( $("<option>#{value.term_name}</option>"))
+              $('#unnecessary_terms').selectpicker('refresh')
+
+
+    onRender: ->
+#      $("#area").val($("#select option:first").val())
 
 
 
