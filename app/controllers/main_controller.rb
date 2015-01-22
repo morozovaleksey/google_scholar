@@ -7,7 +7,4 @@ class MainController < ApplicationController
     end
     gon.science_area = @science_area
   end
-
-
-
 end

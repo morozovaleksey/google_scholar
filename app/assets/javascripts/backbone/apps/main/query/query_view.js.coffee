@@ -3,10 +3,17 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
   class Query.LayoutView extends App.Base.LayoutView
     events:
       'submit form': 'submitForm'
+      'change #check_author_yes': 'showAuthorField'
+      'change #check_author_no': 'hideAuthorField'
+      'change #check_intitle_word_yes': 'showIntitleField'
+      'change #check_intitle_word_no': 'hideIntitleField'
+      'change #check_refinement_of_yes': 'showRefinementOfField'
+      'change #check_refinement_of_no': 'hideRefinementOfField'
+
     initialize: ->
       @dropdownListArea()
       @dropdownListThema()
-#      @$el.find('#theme').find('.selectpicker').find('option')
+      @clearField()
       @subjectSelect()
       @termSelect()
       @unnecessarySubjectSelect()
@@ -121,9 +128,28 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
               $("#unnecessary_terms").append( $("<option>#{value.term_name}</option>"))
               $('#unnecessary_terms').selectpicker('refresh')
 
+    showAuthorField: ->
+      @$el.find('#author-in-article').removeClass('hidden')
 
-    onRender: ->
-#      $("#area").val($("#select option:first").val())
+    hideAuthorField: ->
+      @$el.find('#author-in-article').addClass('hidden')
+
+    showIntitleField: ->
+      @$el.find('#word-title-article').removeClass('hidden')
+
+    hideIntitleField: ->
+      @$el.find('#word-title-article').addClass('hidden')
+
+    showRefinementOfField: ->
+      @$el.find('#refinement-of-article').removeClass('hidden')
+
+    hideRefinementOfField: ->
+      @$el.find('#refinement-of-article').addClass('hidden')
+
+    clearField: ->
+      console.log @$el.find('#author-in-article').val()
+
+
 
 
 

@@ -10,8 +10,6 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
       new Query.LayoutView
         el: $('#search-region')
 
-
-
     showQuery: (layoutView) ->
       @queryModel = App.request "query:model"
       console.log layoutView.queryModel = @queryModel

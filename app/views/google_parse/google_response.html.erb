@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
-          <a href="#">Эффективность поиска</a>
+          <a href="<%= search_efficiency_path %>">Эффективность поиска</a>
         </li>
         <li>
           <a href="#">О программе</a>
@@ -45,10 +45,34 @@
       <hr>
       <div id="search-region">
         <h2>Найденные статьи</h2>
-        Результатов <%= @count %>
-        <%= form_for :page do |f| %>
-            <button type="submit" class="btn btn-primary">1</button>
+        <p> Найденно документов: <%= @response[:count_result] %></p>
+        <p> Запрос: <%= @query_string %></p>
+        <div>
+            <% @response[:text_result].each  do |key, value| %>
+                <p><a href="<%= value %>"><%= key %> </a></p>
+            <% end %>
+        </div>
+
+        <%= form_for :relevant, url: search_efficiency_path do |f| %>
+
+           <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+           <%= f.text_field :page_number, {:hidden =>"", :value =>  @page_number} %>
+            <%= f.submit 'Заполнить', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+
         <% end %>
+
+        <%= form_for :number_page do |f| %>
+
+            <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+
+            <%= f.submit '1', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '2', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '3', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '4', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '5', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+        <% end %>
+
+
       </div>
 
       <hr>
