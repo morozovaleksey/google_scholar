@@ -1,0 +1,103 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="<%= search_efficiency_path %>">Эффективность поиска</a>
+        </li>
+        <li>
+          <a href="#">О программе</a>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- Blog Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <h1 class="header">Система оценки эффективности поиска научной информации</h1>
+
+      <!-- Preview Image -->
+      <div id="logo">
+
+      </div>
+      <hr>
+      <div id="search-efficiency-region">
+        <h2>Добро пожаловать</h2>
+        <hr>
+        <h2 class="header">Регистрация</h2>
+        <div class="auth_reg">
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= devise_error_messages! %>
+
+            <div>
+              <%= f.label :email do %>
+                  Введите ваш email
+              <% end %>
+              <br />
+              <%= f.email_field :email, autofocus: true %></div>
+
+            <div><%= f.label :password do %>
+                  Введите пароль
+              <% end %>
+              <% if @validatable %><i>(<%= @minimum_password_length %> символов минимум)</i><% end %><br />
+              <%= f.password_field :password, autocomplete: "off" %></div>
+
+            <div><%= f.label :password_confirmation do %>
+                  Повторите пароль
+              <% end %>
+              <br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+            <div><%= f.submit "Зарегистрироваться" %></div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+      </div>
+
+      <hr>
+    </div>
+    <div class="col-lg-8">
+
+    </div>
+    <!-- /.row -->
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Made by Aleksey Morozov</p>
+        </div>
+      </div>
+      <!-- /.row -->
+    </footer>
+
+  </div>
+</div>
+
+<!-- /.container -->
+
+
+

@@ -2,6 +2,7 @@ include ActionView::Helpers::SanitizeHelper
 class GoogleParseController < ApplicationController
 
   def google_response
+    gon.current_user_email = current_user.email
     if params[:number_page].nil?
       query = params[:query]
       if query['author'] == ""
@@ -87,7 +88,8 @@ class GoogleParseController < ApplicationController
       end
 
       query_string = "#{author} #{collocation} #{all_words} #{intitle} #{file_type} #{area} #{subject} #{term} #{unnecessary_area} #{unnecessary_subject} #{unnecessary_term}"
-      @query_string = query_string.strip
+      gon.query_string = @query_string = query_string.strip
+      gon.number_page = 0
       @response = parsing  query_string,0
     else
       number_page = params[:number_page]
@@ -107,7 +109,8 @@ class GoogleParseController < ApplicationController
       if number.to_i == 5
         number = 40
       end
-      @query_string =  number_page['query_string']
+      gon.query_string = @query_string =  number_page['query_string']
+      gon.number_page = number
       @response = parsing  @query_string, number
     end
   end

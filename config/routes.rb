@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'persons/profile'
+
+  devise_for :users
   post 'main/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -10,9 +13,10 @@ Rails.application.routes.draw do
   post 'get_number_page', to: 'google_parse#get_number_page'
   post 'evaluate_accuracy', to: 'search_efficiency#evaluate_accuracy'
   get 'search_efficiency', to: 'search_efficiency#evaluation_efficiency'
+  get 'add_to_query', to: 'search_efficiency#add_to_query'
   get 'related_subjects', to: 'related_list#related_subjects_list'
   get 'related_terms', to: 'related_terms#related_terms_list'
-
+  get 'persons/profile', as: 'user_root'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

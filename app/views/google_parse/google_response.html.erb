@@ -15,6 +15,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
+          <a href="<%= root_path %>">Главная</a>
+        </li>
+        <li>
           <a href="<%= search_efficiency_path %>">Эффективность поиска</a>
         </li>
         <li>
@@ -66,27 +69,32 @@
         <% end %>
 
       <hr>
-      <h2>Введите данные для оценки</h2>
-
-      <%= form_for :relevant, url: search_efficiency_path,  method: :get do |f| %>
-
-          <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
-          <%= f.text_field :page_number, {:hidden =>"", :value =>  @page_number} %>
-          <h4>Количество релевантных документов настранице:</h4>
-          <div class="well evaluate">
-              <div class="input-group">
-                <%= f.text_field :amount_relevant, id:'amount_relevant', class: 'form-control', pattern:'\d*' %>
+      <div id="add-data-to-query">
+          <h2>Введите данные для оценки</h2>
+            <div id="error-message"></div>
+          <%= form_for :relevant, url: add_to_query_path, :html=> {:id => 'data-to-evaluate'} do |f| %>
+              <%= f.text_field :current_user, {:hidden =>"", :value => current_user.email} %>
+              <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+              <%= f.text_field :page_number, {:hidden =>"", :value =>  @page_number} %>
+              <h4>Количество релевантных документов настранице:</h4>
+              <div class="well evaluate">
+                  <div class="input-group">
+                    <%= f.text_field :amount_relevant, id:'amount_relevant', class: 'form-control', pattern:'\d*' %>
+                  </div>
               </div>
-          </div>
-          <h4>Всего документов на странице:</h4>
-          <div class="well evaluate">
-            <div class="input-group">
-              <%= f.text_field :amount_all, id:'amount_all', class: 'form-control' %>
-            </div>
-          </div>
-          <%= f.submit 'Заполнить', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+              <h4>Всего документов на странице:</h4>
+              <div class="well evaluate has-error">
+                <div class="input-group ">
+                  <%= f.text_field :amount_all, id:'amount_all', class: 'form-control' %>
+                </div>
+              </div>
+              <%= f.submit 'Заполнить', :class => 'btn btn-primary', :name => 'number_page[number]' %>
 
-      <% end %>
+          <% end %>
+       </div>
+        <div class="hidden" id="success-message">
+          Успешно добавлено!
+         </div>
       </div>
     </div>
     <div class="col-lg-8">
