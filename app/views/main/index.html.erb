@@ -46,7 +46,7 @@
 
       </div>
       <div id="search-region">
-        <%= form_for :query, url:parse_path do |f| %>
+        <%= form_for :query, url:parse_path,method: :get do |f| %>
           <hr>
           <h3>Формирование поискового запроса</h3>
             <div class="question">

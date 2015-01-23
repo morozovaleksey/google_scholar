@@ -119,7 +119,7 @@ class GoogleParseController < ApplicationController
   def parsing query_string, page_number
     @page_number = page_number
     query_string = URI.encode query_string
-    headers = { "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36" }
+    headers = { "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.37" }
     page = Nokogiri::HTML.parse(HTTParty.get("http://scholar.google.com.ua/scholar?start=#{page_number}&q=#{query_string}&hl=ru&as_sdt=0,5&as_vis=1", headers: headers))
     # render text: Nokogiri::HTML(open("http://scholar.google.com.ua/", :proxy => 'http://(217.6.254.155):(80)', headers: headers))
     # Hash[page.xpath("/html/body/div[1]/div[6]/div/div[2]/div/div/h3/a").map {|link| [link.text.strip, link["href"]]}]

@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113222441) do
+ActiveRecord::Schema.define(version: 20150123154738) do
+
+  create_table "queries", force: true do |t|
+    t.string   "id_query"
+    t.text     "query"
+    t.integer  "number_relevant"
+    t.integer  "number_all"
+    t.integer  "number_page"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "science_areas", force: true do |t|
     t.string   "science_area_name"
