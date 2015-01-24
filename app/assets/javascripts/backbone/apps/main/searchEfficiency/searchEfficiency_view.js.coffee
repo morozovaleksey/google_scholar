@@ -5,6 +5,7 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
       'submit form': 'submitForm'
     initialize: ->
       @googlechart()
+
       @selectQuery()
 
     submitForm: (e) ->
@@ -21,7 +22,6 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
     selectQuery: ->
 
       relevanceModel = App.request "relevance:model"
-
       @$el.find('#comparison_query').change =>
         console.log query_string = @$el.find('#comparison_query option:selected').text()
         query_string = $.trim(query_string)
@@ -29,13 +29,20 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
           url: Routes.get_relevance_path({ format: 'json', user_email: gon.current_user_email, query: query_string })
           reset: true
         relevanceModel.on "sync", =>
-          console.log relevanceModel
+          console.log @relevance = relevanceModel.attributes[0].relevance
+          console.log @comparissonQuery = relevanceModel.attributes[0].query
+          @googleRelevanceChart()
 
 
 
     googlechart: ->
       google.load("visualization", "1", {packages:["corechart"]})
       google.setOnLoadCallback(@drawChart)
+
+    googleRelevanceChart: ->
+      google.load("visualization", "1", {packages:["corechart"]})
+      google.setOnLoadCallback(@drawRelevanceChart())
+
 
     drawChart: ->
       data = google.visualization.arrayToDataTable([
@@ -85,7 +92,7 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
         2
       ]
       options =
-        title: "Точность поиска по страницам"
+        title: "Точность поиска по страницам, %"
         width: 600
         height: 400
         bar:
@@ -96,5 +103,52 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
 
       chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"))
       chart.draw view, options
+
+    drawRelevanceChart: ->
+      console.log "fsfsdfsdfsdfssd"
+      data = google.visualization.arrayToDataTable([
+        [
+          "Element"
+          "Релевантность"
+          {
+            role: "style"
+          }
+        ]
+        [
+          "Запрос: #{gon.query_string}"
+          gon.relevant_coefficient
+          "#b87333"
+        ]
+        [
+          "Запрос: #{@comparissonQuery}"
+          @relevance
+          "silver"
+        ]
+      ])
+      view = new google.visualization.DataView(data)
+      view.setColumns [
+        0
+        1
+        {
+          calc: "stringify"
+          sourceColumn: 1
+          type: "string"
+          role: "annotation"
+        }
+        2
+      ]
+      options =
+        title: "Релевантность поиска по запросу, %"
+        width: 600
+        height: 400
+        bar:
+          groupWidth: "95%"
+
+        legend:
+          position: "none"
+
+      console.log chart = new google.visualization.ColumnChart(document.getElementById("columnchart_relevance_values"))
+      chart.draw view, options
+
 
 

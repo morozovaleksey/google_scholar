@@ -1,7 +1,7 @@
 class SearchEfficiencyController < ApplicationController
 
   def evaluation_efficiency
-    @query_string = params["accuracy"]["query_string"]
+    gon.query_string = @query_string = params["accuracy"]["query_string"]
     gon.current_user_email = current_user.email
     query_record = Query.where(user_email: current_user.email).where(query: @query_string)
     count_analyzing = Query.where(user_email: current_user.email).where(query: @query_string).count
@@ -32,7 +32,7 @@ class SearchEfficiencyController < ApplicationController
       @page5 = Query.where(user_email: current_user.email).where(query: @query_string).where(number_page:5)
       gon.page5_number_relevant = page5_number_relevant = @page5[0].number_relevant
       gon.page5_number_all = page5_number_all = @page5[0].number_all
-      @relevant_coefficient = ((((page1_number_relevant.to_f / page1_number_all.to_f) * 5)/ 15 +
+      gon.relevant_coefficient = @relevant_coefficient = ((((page1_number_relevant.to_f / page1_number_all.to_f) * 5)/ 15 +
                  ((page2_number_relevant.to_f / page2_number_all.to_f) *4)/15 +
                  ((page3_number_relevant.to_f / page3_number_all.to_f) *3)/15 +
                  ((page4_number_relevant.to_f / page4_number_all.to_f) *2)/15 +
@@ -48,8 +48,12 @@ class SearchEfficiencyController < ApplicationController
                           (page4_number_relevant.to_f / page4_number_all.to_f) +
                           (page5_number_relevant.to_f / page5_number_all.to_f))/5) * 100).round(2)
       @comparison_relevant_query =  Relevance.where(user_email: current_user.email)
-      Relevance.create(:user_email => current_user.email, :query => @query_string, :relevance => @relevant_coefficient )
-
+      if Relevance.where(:user_email => current_user.email).where(:query => @query_string).limit(1).blank?
+        Relevance.create(:user_email => current_user.email, :query => @query_string, :relevance => @relevant_coefficient)
+      else
+        relevance_record = Relevance.where(:user_email => current_user.email).where(:query => @query_string).limit(1)
+        relevance_record.update(relevance_record[0].id,:relevance => @relevant_coefficient)
+      end
     end
     # render json: params
   end
