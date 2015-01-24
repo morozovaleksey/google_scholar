@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post 'evaluate_accuracy', to: 'search_efficiency#evaluate_accuracy'
   get 'search_efficiency', to: 'search_efficiency#evaluation_efficiency'
   get 'add_to_query', to: 'search_efficiency#add_to_query'
+  get 'get_relevance', to: 'search_efficiency#get_relevance'
   get 'related_subjects', to: 'related_list#related_subjects_list'
   get 'related_terms', to: 'related_terms#related_terms_list'
   get 'persons/profile', as: 'user_root'

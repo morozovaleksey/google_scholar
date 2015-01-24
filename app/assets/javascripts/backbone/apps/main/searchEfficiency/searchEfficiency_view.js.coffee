@@ -5,6 +5,7 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
       'submit form': 'submitForm'
     initialize: ->
       @googlechart()
+      @selectQuery()
 
     submitForm: (e) ->
       e.preventDefault()
@@ -17,36 +18,83 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
       console.log accurancy4 =  @$el.find('#same_relevant4').val() / @$el.find('#all_relevant4').val()
       console.log @$el.find('#accurancy4').val("#{accurancy4}")
 
+    selectQuery: ->
+
+      relevanceModel = App.request "relevance:model"
+
+      @$el.find('#comparison_query').change =>
+        console.log query_string = @$el.find('#comparison_query option:selected').text()
+        query_string = $.trim(query_string)
+        console.log response = relevanceModel.fetch
+          url: Routes.get_relevance_path({ format: 'json', user_email: gon.current_user_email, query: query_string })
+          reset: true
+        relevanceModel.on "sync", =>
+          console.log relevanceModel
+
+
+
     googlechart: ->
+      google.load("visualization", "1", {packages:["corechart"]})
       google.setOnLoadCallback(@drawChart)
 
     drawChart: ->
       data = google.visualization.arrayToDataTable([
         [
-          "Year"
-          "Sales"
-
+          "Element"
+          "Точность"
+          {
+            role: "style"
+          }
         ]
         [
-          "20"
-          200
-
-
+          "Страница 1"
+          gon.accuracy1
+          "#b87333"
         ]
         [
-          "200"
-          400
-
-
+          "Страница 2"
+          gon.accuracy2
+          "silver"
+        ]
+        [
+          "Страница 3"
+          gon.accuracy3
+          "gold"
+        ]
+        [
+          "Страница 4"
+          gon.accuracy4
+          "color: #e5e4e2"
+        ]
+        [
+          "Страница 5"
+          gon.accuracy5
+          "color: #e4f4e6"
         ]
       ])
+      view = new google.visualization.DataView(data)
+      view.setColumns [
+        0
+        1
+        {
+          calc: "stringify"
+          sourceColumn: 1
+          type: "string"
+          role: "annotation"
+        }
+        2
+      ]
       options =
-        title: "Точность"
-        curveType: "function"
-        legend:
-          position: "bottom"
+        title: "Точность поиска по страницам"
+        width: 600
+        height: 400
+        bar:
+          groupWidth: "95%"
 
-      chart = new google.visualization.LineChart(document.getElementById("curve_chart"))
-      chart.draw data, options
+        legend:
+          position: "none"
+
+      chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"))
+      chart.draw view, options
 
 

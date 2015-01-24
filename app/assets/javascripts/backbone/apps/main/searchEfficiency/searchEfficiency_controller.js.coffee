@@ -4,11 +4,9 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
 
     initialize: (options) ->
       @layoutView = @getLayoutView()
-      
-
 
     getLayoutView: ->
       new SearchEfficiency.LayoutView
-        el: $('#search-efficiency-region')
+        el: $('#search-efficient-query-region')
 
 

@@ -10,15 +10,17 @@ App.module "MainApp.GoogleResponse", (GoogleResponse, App, Backbone, Marionette,
       e.preventDefault()
       console.log @$el.find('#amount_relevant').val()
       if @$el.find('#amount_relevant').val() == ""
-        @$el.find('#error-message').html("Введите количество релевантных документов на странице")
+        @$el.find('#error-message').html("*Введите количество релевантных документов на странице")
+        @$el.find('#block-amount-relevant').addClass('has-error')
       else if @$el.find('#amount_all').val() == ""
-        @$el.find('#error-message').html("Введите количество всех на странице")
+        @$el.find('#error-message').html("*Введите количество всех на странице")
+        @$el.find('#block-amount-all').addClass('has-error')
       else
         response = @googleResponseModel.fetch
-          url: Routes.add_to_query_path({ format: 'json', user_email: gon.current_user, query: gon.query_string, number_relevant: @$el.find('#amount_relevant').val(), number_all:@$el.find('#amount_all').val(), number_page: gon.number_page})
+          url: Routes.add_to_query_path({ format: 'json', user_email: gon.current_user_email, query: gon.query_string, number_relevant: @$el.find('#amount_relevant').val(), number_all:@$el.find('#amount_all').val(), number_page: gon.number_page})
           reset: true
           success: => @showSuccess()
 
     showSuccess: ->
-      console.log @$el.find('#add-data-to-query').addClass('hidden')
-      console.log @$el.find('#success-message').removeClass('hidden')
+      @$el.find('#add-data-to-query').addClass('hidden')
+      @$el.find('#success-message').removeClass('hidden')

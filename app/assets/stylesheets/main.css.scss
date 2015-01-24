@@ -59,12 +59,13 @@ label {
 }
 .evaluate {
   width: 210px;
+  margin-left: 28%;
 }
 .header {
   text-align: center;
 }
 .auth_reg {
-  margin-left: 38%;
+//  margin-left: 38%;
 }
 #success-message {
   color:green
@@ -72,3 +73,36 @@ label {
 #error-message {
   color: red
 }
+#authorization-region {
+  text-align: center;
+}
+#form-page-number {
+  text-align: center;
+}
+#data-modal-button {
+  margin-left: 37%;
+}
+#add-data-to-query {
+
+//  text-align: center;
+}
+.modal-dialog {
+  width: 456px;
+}
+#btn-add-data-to-evaluate {
+  margin-left: 43%;
+}
+#h-data-to-evaluate {
+  font-style: italic;
+  text-align: center;
+}
+#info-user {
+  position: relative;
+  color: white;
+  margin-left: 61%;
+}
+#error-count {
+  color:red;
+}
+
+

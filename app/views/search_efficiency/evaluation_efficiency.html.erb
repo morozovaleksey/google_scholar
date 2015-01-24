@@ -25,6 +25,14 @@
         </li>
       </ul>
     </div>
+    <div id="info-user">
+      <% if user_signed_in? %>
+          <span>Здравствуйте, <%= current_user.email %></span>
+          <%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
+      <% else %>
+          <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+      <% end %>
+    </div>
     <!-- /.navbar-collapse -->
   </div>
   <!-- /.container -->
@@ -39,52 +47,63 @@
     <div class="col-lg-8">
 
       <!-- Title -->
-      <h1>Google scholar</h1>
+      <h1 class="header">Система оценки эффективности поиска научной информации</h1>
 
       <!-- Preview Image -->
       <div id="logo">
-        <img class="img-responsive" src="http://scholar.google.com.ua/intl/ru/scholar/images/scholar_logo_lg_2011.gif" alt="">
-      </div>
-      <hr>
-      <div id="search-efficiency-region">
-            <h2>Показатели эффективности поиска</h2>
-            <hr>
-            <h3>Точность поиска</h3>
-            <%= form_for :accuracy, url:search_efficiency_path do |f| %>
-            <table border="1" style="background-color:#FFFFFF;border-collapse:collapse;border:1px solid #000000;color:#000033;width:100%" cellpadding="3" cellspacing="3">
-              <tr>
-                <td>Число документов</td>
-                <td>Из них релевантных</td>
-                <td>Точность</td>
-
-              </tr>
-              <tr>
-              <tr>
-                <td><input id="all_relevant1" type="text" style="width:100%"/></td>
-                <td><input id="same_relevant1"type="text" style="width:100%"/></td>
-                <td><input id="accurancy1" disabled type="text" style="width:100%"/></td>
-              </tr>
-              <tr>
-                <td><input id="all_relevant2" type="text" style="width:100%"/></td>
-                <td><input id="same_relevant2" type="text" style="width:100%"/></td>
-                <td><input id="accurancy2" disabled type="text" style="width:100%"/></td>
-              </tr>
-              <tr>
-                <td><input id="all_relevant3"type="text" style="width:100%"/></td>
-                <td><input id="same_relevant3" type="text" style="width:100%"/></td>
-                <td><input id="accurancy3" disabled type="text" style="width:100%"/></td>
-              </tr>
-              <tr>
-                <td><input id="all_relevant4"type="text" style="width:100%"/></td>
-                <td><input id="same_relevant4" type="text" style="width:100%"/></td>
-                <td><input id="accurancy4" disabled type="text" style="width:100%"/></td>
-              </tr>
-            </table>
-            <button type="submit" class="btn btn-primary"> Расчитать точность </button>
-            <% end %>
-        <div id="curve_chart" style="width: 900px; height: 500px"></div>
 
       </div>
+      <div id="search-efficient-query-region">
+           <hr>
+          <h2>Информация о запросе:</h2>
+          <p>Ваш запрос: <%= @query_string %> </p>
+          <% if defined? @error_message %>
+              <p id="error-count">Ошибка:<%= @error_message%> </p>
+              <p id="error-count"> Вернитесь назад и заполните информацию по всем страницам!</p>
+              <a href="#" onclick="window.history.back();return false;">Назад</a>
+          <% else %>
+              <p>Первая страница: релевантных документов <%= @page1[0].number_relevant %>; всего документов на странице: <%= @page1[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page2[0].number_relevant %>; всего документов на странице: <%= @page2[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page3[0].number_relevant %>; всего документов на странице: <%= @page3[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page4[0].number_relevant %>; всего документов на странице: <%= @page4[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page5[0].number_relevant %>; всего документов на странице: <%= @page5[0].number_all %> </p>
+               <hr>
+
+              <h2>Показатели поиска:</h2>
+                    <h4>Коэффициент релевантности поиска: <%= @relevant_coefficient %>%</h4>
+                     <h4>Средний коэффициент точности: <%= @average_accuracy %>%</h4>
+
+              <hr>
+              <h3>Точность поиска</h3>
+            <div class="question">
+              <h4>Показать график коэффициента точности по страницам?</h4>
+              <input type="radio" checked="checked" id ="check_author_yes" name="accuracy"/>да
+              <input type="radio" id ="check_author_no" name="accuracy" checked/>нет
+              <br>
+            </div>
+            <div class="" id="columnchart_values" style="width: 900px; height: 300px;"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="question">
+              <h4>Сравнить коэффициент релевантности с другим аналогичным запросом?</h4>
+              <input type="radio" checked="checked" id ="check_author_yes" name="comparison_relevant"/>да
+              <input type="radio" id ="check_author_no" name="comparison_relevant" checked/>нет
+              <br>
+              <select class="selectpicker" id="comparison_query" data-live-search="true" title='Выберите запрос'>
+                <option></option>
+                <% @comparison_relevant_query.each do |query| %>
+                    <option> <%= query[:query] %> </option>
+                <% end %>
+              </select>
+            </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
 
       <hr>
     </div>
@@ -96,7 +115,7 @@
     <footer>
       <div class="row">
         <div class="col-lg-12">
-          <p>Copyright &copy; Your Website 2014</p>
+          <p>Made by Aleksey Morozov </p>
         </div>
       </div>
       <!-- /.row -->
@@ -105,4 +124,7 @@
   </div>
 </div>
 
+
+
 <!-- /.container -->
+

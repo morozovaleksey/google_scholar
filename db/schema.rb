@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123185024) do
+ActiveRecord::Schema.define(version: 20150124160845) do
 
   create_table "queries", force: true do |t|
     t.string   "user_email"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20150123185024) do
     t.integer  "number_relevant"
     t.integer  "number_all"
     t.integer  "number_page"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "relevances", force: true do |t|
+    t.string   "user_email"
+    t.text     "query"
+    t.float    "relevance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
