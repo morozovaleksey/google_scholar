@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'get_relevance', to: 'search_efficiency#get_relevance'
   get 'related_subjects', to: 'related_list#related_subjects_list'
   get 'related_terms', to: 'related_terms#related_terms_list'
+  get 'comparison_queries', to: 'comparison_queries#comparison'
   get 'persons/profile', as: 'user_root'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

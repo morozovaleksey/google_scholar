@@ -81,6 +81,7 @@
                         <%= f.text_field :current_user, {:hidden =>"", :value => current_user.email} %>
                         <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
                         <%= f.text_field :page_number, {:hidden =>"", :value =>  @page_number} %>
+                        <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
                         <h4>Количество релевантных документов настранице:</h4>
                         <div class="well evaluate" id="block-amount-relevant">
                           <div class="input-group">
@@ -114,6 +115,8 @@
         <%= form_for :accuracy, url: search_efficiency_path, method: :get do |f| %>
             <%= f.text_field :current_user, {:hidden =>"", :value => current_user.email} %>
             <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+            <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
+
         <div class="button_container">
         <button type="submit" class="btn btn-primary btn-lg">Оценка эффективности</button>
       </div>
@@ -122,7 +125,7 @@
         <%= form_for :number_page, method: :get,:html=> {:id => 'form-page-number'} do |f| %>
 
             <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
-
+            <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
             <%= f.submit '1', :class => 'btn btn-primary', :name => 'number_page[number]' %>
             <%= f.submit '2', :class => 'btn btn-primary', :name => 'number_page[number]' %>
             <%= f.submit '3', :class => 'btn btn-primary', :name => 'number_page[number]' %>

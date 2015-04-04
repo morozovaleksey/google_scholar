@@ -18,6 +18,9 @@
           <a href="<%= root_path %>">Главная</a>
         </li>
         <li>
+          <a href="<%= comparison_queries_path %>">Сравнение запросов</a>
+        </li>
+        <li>
           <a href="#">О программе</a>
         </li>
       </ul>
@@ -54,90 +57,101 @@
         <%= form_for :query, url:parse_path,method: :get do |f| %>
           <hr>
           <h3>Формирование поискового запроса</h3>
-            <div class="question">
-                <h4>Знаете ли вы имя автора статьи?</h4>
-                <input type="radio" checked="checked" id ="check_author_yes" name="raz"/>да
-                <input type="radio" id ="check_author_no" name="raz" checked/>нет
-                 <br>
-            </div>
-            <div class="well hidden" id="author-in-article">
-              <h4>Введите автора научной статьи </h4>
+            <div class="well" id="all-words-in-article">
+              <h4>Введите ключевые слова</h4>
               <div class="input-group">
-                <%= f.text_field :author, id:'author', class: 'form-control' %>
-              </div>
-              <!-- /.input-group -->
-            </div>
-            <div class="question">
-              <h4>Знаете ли вы слова в заголовке статьи?</h4>
-              <input type="radio" checked="checked" id ="check_intitle_word_yes" name="keywords"/>да
-              <input type="radio" id ="check_intitle_word_no" name="keywords" checked/>нет
-              <br>
-            </div>
-            <div class="well hidden" id="word-title-article">
-              <h4>Введите слово в заголовке статьи</h4>
-              <div class="input-group">
-                <%= f.text_field :word_title, id:'word_title', class: 'form-control' %>
+                <%= f.text_field :all_words, id:'all_words', class: 'form-control' %>
               </div>
             </div>
-          <div class="well" id="all-words-in-article">
-            <h4>Введите ключевые слова</h4>
+
+        <div class="question">
+           <h4>Хотите ли вы уточнить выдачу документов?</h4>
+          <%= f.radio_button :check_specifying_query_yes,:yes,{:checked => 'checked',:id => 'check_refinement_of_yes',:name => 'query[specify_query]'} %>да
+          <%= f.radio_button :check_specifying_query_no,:no,{:checked => 'checked',:id => 'check_refinement_of_no', :name => 'query[specify_query]'} %>нет
+
+           <!--<input type="radio" checked="checked" id ="check_refinement_of_yes" name="refinement"/>да-->
+           <!--<input type="radio" id ="check_refinement_of_no" name="refinement" checked/>нет-->
+           <br>
+        </div>
+        <div class="well hidden white-background " id="refinement-of-article">
+          <div class="question">
+            <h4>Знаете ли вы имя автора статьи?</h4>
+            <input type="radio" checked="checked" id ="check_author_yes" name="raz"/>да
+            <input type="radio" id ="check_author_no" name="raz" checked/>нет
+            <br>
+          </div>
+          <div class="well hidden" id="author-in-article">
+            <h4>Введите автора научной статьи </h4>
             <div class="input-group">
-              <%= f.text_field :all_words, id:'all_words', class: 'form-control' %>
+              <%= f.text_field :author, id:'author', class: 'form-control' %>
             </div>
-            <h4>Введите ключевые словосочетания словосочетания</h4>
+            <!-- /.input-group -->
+          </div>
+          <div class="question">
+            <h4>Знаете ли вы слова в заголовке статьи?</h4>
+            <input type="radio" checked="checked" id ="check_intitle_word_yes" name="keywords"/>да
+            <input type="radio" id ="check_intitle_word_no" name="keywords" checked/>нет
+            <br>
+          </div>
+          <div class="well hidden" id="word-title-article">
+            <h4>Введите слово в заголовке статьи</h4>
+            <div class="input-group">
+              <%= f.text_field :word_title, id:'word_title', class: 'form-control' %>
+            </div>
+          </div>
+          <div class="well" id="all-words-in-article">
+            <h4>Введите ключевые словосочетания</h4>
             <div class="input-group">
               <%= f.text_field :collocation, id:'collocation', class: 'form-control' %>
             </div>
           </div>
-        <div class="question">
-           <h4>Хотите ли вы уточнить выдачу документов?</h4>
-           <input type="radio" checked="checked" id ="check_refinement_of_yes" name="refinement"/>да
-           <input type="radio" id ="check_refinement_of_no" name="refinement" checked/>нет
-           <br>
-        </div>
-        <div class="well hidden" id="refinement-of-article">
-          <h4>Тип файлов выдачи</h4>
-          <%= f.select(:file_type, ['PDF', 'DOC'], {include_blank: "Любые"}, { :class => 'selectpicker', :id => 'file_type' }) %>
+          <div class="well">
+              <h4>Тип файлов выдачи</h4>
+              <%= f.select(:file_type, ['PDF', 'DOC'], {include_blank: "Любые"}, { :class => 'selectpicker', :id => 'file_type' }) %>
+          </div>
+          <div class="well">
           <h4>Выберите предметную область поиска</h4>
-          <%= f.select(:area, [], {include_blank: "Любая"}, { :class => 'form-control', :id => 'area' })  do %>
-              <% @science_area.each do |area| %>
-                  <option> <%= area[:name] %> </option>
+              <%= f.select(:area, [], {include_blank: "Любая"}, { :class => 'form-control', :id => 'area' })  do %>
+                  <% @science_area.each do |area| %>
+                      <option> <%= area[:name] %> </option>
+                  <% end %>
               <% end %>
-          <% end %>
-          <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
-              <%= f.check_box :check_area, id: 'check_area' %>Включить слово в запрос
-          <% end %>
-          <%= f.select(:subject, [], {include_blank: "Любая"}, { :class => 'form-control',:id => 'subject' })%>
-          <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
-              <%= f.check_box :check_subject, id: 'check_subject' %>Включить слово в запрос
-          <% end %>
-          <%= f.select(:term, [], {include_blank: "Любая"}, {:class => 'form-control', :id => 'term' }) %>
-          <%= f.label :label_check_subject,{:class => 'checkbox-inline'} do %>
-              <%= f.check_box :check_term, id: 'check_term' %>Включить слово в запрос
-          <% end %>
-
-          <h4>Отсеить слова,которые не касаются вашей предметной области?</h4>
-          <%= f.select(:unnecessary_area, [], {include_blank: "Любая"}, { :class => 'form-control', :id => 'unnecessary_area' })  do %>
-              <% @science_area.each do |area| %>
-                  <option> <%= area[:name] %> </option>
+              <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_area, id: 'check_area' %>Включить слово в запрос
               <% end %>
-          <% end %>
-          <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
-              <%= f.check_box :check_unnecessary_area, id: 'check_unnecessary_area' %>Включить слово в запрос
-          <% end %>
-          <%= f.select(:unnecessary_subject, [], {include_blank: "Любая"}, { :class => 'form-control',:id => 'unnecessary_subject' })%>
-          <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
-              <%= f.check_box :check_unnecessary_subject, id: 'check_unnecessary_subject' %>Включить слово в запрос
-          <% end %>
+              <%= f.select(:subject, [], {include_blank: "Любая"}, { :class => 'form-control',:id => 'subject' })%>
+              <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
+                  <%= f.check_box :check_subject, id: 'check_subject' %>Включить слово в запрос
+              <% end %>
+              <%= f.select(:term, [], {include_blank: "Любая"}, {:class => 'form-control', :id => 'term' }) %>
+              <%= f.label :label_check_subject,{:class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_term, id: 'check_term' %>Включить слово в запрос
+              <% end %>
+          </div>
+          <div class="well">
+              <h4>Отсеить слова,которые не касаются вашей предметной области?</h4>
+              <%= f.select(:unnecessary_area, [], {include_blank: "Любая"}, { :class => 'form-control', :id => 'unnecessary_area' })  do %>
+                  <% @science_area.each do |area| %>
+                      <option> <%= area[:name] %> </option>
+                  <% end %>
+              <% end %>
+              <%= f.label :label_check_area,{ :class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_unnecessary_area, id: 'check_unnecessary_area' %>Включить слово в запрос
+              <% end %>
+              <%= f.select(:unnecessary_subject, [], {include_blank: "Любая"}, { :class => 'form-control',:id => 'unnecessary_subject' })%>
+              <%= f.label :label_check_subject, { :class => 'checkbox-inline'} do  %>
+                  <%= f.check_box :check_unnecessary_subject, id: 'check_unnecessary_subject' %>Включить слово в запрос
+              <% end %>
 
-          <br>
-          <%= f.select(:unnecessary_terms, [], {include_blank: "Любая"}, {:class => 'selectpicker', :id => 'unnecessary_terms', 'data-live-search' => 'true', :multiple => '', :title =>'Выберите слова' }) do %>
+              <br>
+              <%= f.select(:unnecessary_terms, [], {include_blank: "Любая"}, {:class => 'selectpicker', :id => 'unnecessary_terms', 'data-live-search' => 'true', :multiple => '', :title =>'Выберите слова' }) do %>
 
-          <% end %>
-          <br>
-          <%= f.label :label_check_term,{ :class => 'checkbox-inline'} do %>
-              <%= f.check_box :check_unnecessary_term, id: 'check_unnecessary_term' %>Включить слова в запрос
-          <% end %>
+              <% end %>
+              <br>
+              <%= f.label :label_check_term,{ :class => 'checkbox-inline'} do %>
+                  <%= f.check_box :check_unnecessary_term, id: 'check_unnecessary_term' %>Включить слова в запрос
+              <% end %>
+          </div>
         </div>
 
         <div class="button_container">

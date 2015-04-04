@@ -5,6 +5,7 @@ class GoogleParseController < ApplicationController
     gon.current_user_email = current_user.email
     if params[:number_page].nil?
       query = params[:query]
+      @specify_query = query['specify_query']
       if query['author'] == ""
         author = query['author']
       else
@@ -31,14 +32,14 @@ class GoogleParseController < ApplicationController
       end
       if query['check_area'] == "1"
         if query['area'] != ""
-          area = "\"#{query['area']}\""
+          area = "#{query['area']}"
         end
       else
         area = ""
       end
       if query['check_subject'] == "1"
         if query['subject'] != ""
-          subject = "\"#{query['subject']}\""
+          subject = "#{query['subject']}"
         end
       else
         subject = ""
@@ -95,6 +96,7 @@ class GoogleParseController < ApplicationController
     else
       number_page = params[:number_page]
       number = number_page['number']
+      gon.specify_query = @specify_query = number_page['specify_query']
       gon.number_page = number
       @number_page = number
       if number.to_i == 1
@@ -125,7 +127,7 @@ class GoogleParseController < ApplicationController
     @page_number = page_number
     query_string = URI.encode query_string
     headers = { "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.37" }
-    render text: page = Nokogiri::HTML.parse(HTTParty.get("http://scholar.google.com.ua/scholar?start=#{page_number}&q=#{query_string}&hl=ru&as_sdt=0,5&as_vis=1", headers: headers))
+    page = Nokogiri::HTML.parse(HTTParty.get("http://scholar.google.com.ua/scholar?start=#{page_number}&q=#{query_string}&hl=ru&as_sdt=0,5&as_vis=1", headers: headers))
     # render text: Nokogiri::HTML(open("http://scholar.google.com.ua/", :proxy => 'http://(217.6.254.155):(80)', headers: headers))
     # Hash[page.xpath("/html/body/div[1]/div[6]/div/div[2]/div/div/h3/a").map {|link| [link.text.strip, link["href"]]}]
     responce_hash = {}

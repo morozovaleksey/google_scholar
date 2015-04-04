@@ -12,7 +12,6 @@
 //
 //= require jquery/dist/jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require underscore/underscore
 //= require moment/moment
 //= require bootstrap/dist/js/bootstrap

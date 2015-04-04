@@ -2,7 +2,7 @@
   "name": "rivets",
   "description": "Declarative data binding + templating solution.",
   "homepage": "http://rivetsjs.com",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "main": "dist/rivets.js",
   "license": "MIT",
   "authors": [
@@ -18,13 +18,13 @@
     "spec"
   ],
   "dependencies": {
-    "sightglass": "~0.2.3"
+    "sightglass": "~0.2.4"
   },
-  "_release": "0.7.2",
+  "_release": "0.8.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.7.2",
-    "commit": "1bc811eaf228930c521274a3c95b9e5e18f25719"
+    "tag": "v0.8.0",
+    "commit": "4ba976194c2839a6742e138965efcfd97c43a32f"
   },
   "_source": "git@github.com:mikeric/rivets.git",
   "_target": "*",

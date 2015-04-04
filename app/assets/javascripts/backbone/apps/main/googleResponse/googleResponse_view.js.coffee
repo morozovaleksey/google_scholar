@@ -17,7 +17,7 @@ App.module "MainApp.GoogleResponse", (GoogleResponse, App, Backbone, Marionette,
         @$el.find('#block-amount-all').addClass('has-error')
       else
         response = @googleResponseModel.fetch
-          url: Routes.add_to_query_path({ format: 'json', user_email: gon.current_user_email, query: gon.query_string, number_relevant: @$el.find('#amount_relevant').val(), number_all:@$el.find('#amount_all').val(), number_page: gon.number_page})
+          url: Routes.add_to_query_path({ format: 'json', user_email: gon.current_user_email, query: gon.query_string, number_relevant: @$el.find('#amount_relevant').val(), number_all:@$el.find('#amount_all').val(), number_page: gon.number_page, specify_query: $('#relevant_specify_query').val() })
           reset: true
           success: => @showSuccess()
 

@@ -2,6 +2,7 @@ class SearchEfficiencyController < ApplicationController
 
   def evaluation_efficiency
     gon.query_string = @query_string = params["accuracy"]["query_string"]
+    gon.specify_query = @specify_query = params["accuracy"]["specify_query"]
     gon.current_user_email = current_user.email
     query_record = Query.where(user_email: current_user.email).where(query: @query_string)
     count_analyzing = Query.where(user_email: current_user.email).where(query: @query_string).count
@@ -49,7 +50,7 @@ class SearchEfficiencyController < ApplicationController
                           (page5_number_relevant.to_f / page5_number_all.to_f))/5) * 100).round(2)
       @comparison_relevant_query =  Relevance.where(user_email: current_user.email)
       if Relevance.where(:user_email => current_user.email).where(:query => @query_string).limit(1).blank?
-        Relevance.create(:user_email => current_user.email, :query => @query_string, :relevance => @relevant_coefficient)
+        Relevance.create(:user_email => current_user.email, :query => @query_string, :relevance => @relevant_coefficient,:specify_query => @specify_query)
       else
         relevance_record = Relevance.where(:user_email => current_user.email).where(:query => @query_string).limit(1)
         relevance_record.update(relevance_record[0].id,:relevance => @relevant_coefficient)

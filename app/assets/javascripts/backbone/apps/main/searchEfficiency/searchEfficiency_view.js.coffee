@@ -105,7 +105,7 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
       chart.draw view, options
 
     drawRelevanceChart: ->
-      console.log "fsfsdfsdfsdfssd"
+
       data = google.visualization.arrayToDataTable([
         [
           "Element"
@@ -138,7 +138,7 @@ App.module "MainApp.SearchEfficiency", (SearchEfficiency, App, Backbone, Marione
         2
       ]
       options =
-        title: "Релевантность поиска по запросу, %"
+        title: "Взвешенный показатель точности по запросу, %"
         width: 600
         height: 400
         bar:

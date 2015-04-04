@@ -10,6 +10,9 @@
   <a href='https://coveralls.io/r/marionettejs/backbone.marionette'>
     <img src='https://img.shields.io/coveralls/marionettejs/backbone.marionette.svg' alt='Coverage Status' />
   </a>
+  <a href='https://gitter.im/marionettejs/backbone.marionette?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge'>
+    <img src='https://badges.gitter.im/Join%20Chat.svg' alt='Gitter Chat' />
+  </a>
 </p>
 
 ## About Marionette
@@ -67,6 +70,22 @@ We're happy to discuss design patterns and learn how you're using Marionette.
 * Flexible, "as-needed" architecture allowing you to pick and choose what you need
 * And much, much more
 
+
+## Marionette Inspector
+
+<a href="https://github.com/marionettejs/marionette.inspector"><img src="http://i.imgur.com/B1q9QXH.jpg" align="center" /></a>
+
++ **Visualize** the view hierarchy with the UI tree
++ **Visualize** application activity with a full history of actions
++ **Inspect** view ui, events, listeners, properties
++ **Inspect** model attributes, listeners, properties
++ **Explore** Radio channel events, requests, commands
++ **Explore** application with an inspector magnifying glass
++ **Jump** between the inspector elements and source panel with intelligent links
+
+Download at [Chrome Web Store](https://chrome.google.com/webstore/detail/marionette-inspector/fbgfjlockdhidoaempmjcddibjklhpka)  
+Explore code at  [Github](https://github.com/marionettejs/marionette.inspector)
+
 ## Source Code and Downloads
 
 You can download the latest builds directly from the "lib" folder above.
@@ -80,7 +99,6 @@ please visit [the downloads section on the website](http://marionettejs.com#down
 
 Marionette is available via bower, npm, and component.io. There are other channels that are maintained by the community.
 
-##### [Available Packages](https://github.com/marionettejs/backbone.marionette/wiki/Available-packages)
 
 ## Release Notes And Upgrade Guide
 
