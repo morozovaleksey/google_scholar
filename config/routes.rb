@@ -9,10 +9,10 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'main#index'
-  get 'parse', to: 'google_parse#google_response'
+  post 'parse', to: 'google_parse#google_response'
   post 'get_number_page', to: 'google_parse#get_number_page'
   post 'evaluate_accuracy', to: 'search_efficiency#evaluate_accuracy'
-  get 'search_efficiency', to: 'search_efficiency#evaluation_efficiency'
+  post 'search_efficiency', to: 'search_efficiency#evaluation_efficiency'
   get 'add_to_query', to: 'search_efficiency#add_to_query'
   get 'get_relevance', to: 'search_efficiency#get_relevance'
   get 'related_subjects', to: 'related_list#related_subjects_list'

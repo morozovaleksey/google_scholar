@@ -41,16 +41,9 @@ App.module "MainApp.Query", (Query, App, Backbone, Marionette, $, _) ->
         queryString = $.trim(queryString)
         queryString = encodeURIComponent(queryString)
         url = 'http://scholar.google.com/scholar?q='+queryString
-#        window.open(url,'GScholar')
-#        @saveQuery()
 
-    saveQuery: ->
-      console.log  @queryModel.attributes
-#        type: "post"
-#        success: (model, response) =>
-#         console.log "success"
-#        error: (model, response) =>
-#          console.log "error"
+
+
 
 
 

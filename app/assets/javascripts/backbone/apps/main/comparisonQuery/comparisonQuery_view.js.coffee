@@ -5,9 +5,6 @@ App.module "MainApp.ComparisonQuery", (ComparisonQuery, App, Backbone, Marionett
     initialize: ->
       @googleComparisonChart()
 
-    onRender: ->
-      console.log "sfdgd"
-
     googleComparisonChart: ->
       google.load("visualization", "1", {packages:["corechart"]})
       google.setOnLoadCallback(@drawComparisonChart())

@@ -56,7 +56,6 @@ class SearchEfficiencyController < ApplicationController
         relevance_record.update(relevance_record[0].id,:relevance => @relevant_coefficient)
       end
     end
-    # render json: params
   end
 
   def add_to_query
@@ -69,7 +68,6 @@ class SearchEfficiencyController < ApplicationController
   end
 
   def get_relevance
-    # render text: params
     render json: Relevance.where(user_email: params[:user_email]).where(query: params[:query])
   end
 end
