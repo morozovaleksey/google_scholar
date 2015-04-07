@@ -1,9 +1,11 @@
 class MainController < ApplicationController
+  before_filter :authenticate_user!
   def index
-    @science = {computer_scientiest: "Информационные технологии", math: "Математика", physics: "Физика"}
-    @array2 = { computer_scientiest: ["программирование", "кибернетика", "Грид",], math: ["интегрирование", "производная"]}
-    gon.array1 = @array1
-    gon.array2 = @array2
+    science_area_model = ScienceArea.all
+    @science_area = []
+    science_area_model.each_with_index  do |area,index|
+      @science_area[index]= {id: area.id, name: area.science_area_name}
+    end
+    gon.science_area = @science_area
   end
-
 end

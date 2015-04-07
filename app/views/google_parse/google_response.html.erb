@@ -1,0 +1,118 @@
+
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- Blog Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <h1 class="header">Система оценки эффективности поиска научной информации</h1>
+
+      <!-- Preview Image -->
+      <div id="logo">
+
+      </div>
+      <hr>
+      <div id="responce-region">
+        <h2>Найденные статьи</h2>
+
+        <p> Запрос: <%= @query_string %></p>
+        <p> Номер статраницы: <%= @number_page %></p>
+
+      <hr>
+
+          <h4 id="h-data-to-evaluate">Нажмите на кнопку "Данные для оценки", чтобы ввести необходимые данные</h4>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" id="data-modal-button" data-toggle="modal" data-target="#myModal">
+          Данные для оценки
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Данные для оценки эффективности поиска</h4>
+              </div>
+              <div class="modal-body">
+                <div id="add-data-to-query">
+                    <div id="error-message"></div>
+                    <%= form_for :relevant, url: add_to_query_path, :html=> {:id => 'data-to-evaluate'} do |f| %>
+                        <%= f.text_field :current_user, {:hidden =>"", :value => current_user.email} %>
+                        <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+                        <%= f.text_field :page_number, {:hidden =>"", :value =>  @page_number} %>
+                        <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
+                        <h4>Количество релевантных документов настранице:</h4>
+                        <div class="well evaluate" id="block-amount-relevant">
+                          <div class="input-group">
+                            <%= f.text_field :amount_relevant, id:'amount_relevant', class: 'form-control', pattern:'\d*' %>
+                          </div>
+                        </div>
+                        <h4>Всего документов на странице:</h4>
+                        <div class="well evaluate" id="block-amount-all">
+                          <div class="input-group ">
+                            <%= f.text_field :amount_all, id:'amount_all', class: 'form-control' %>
+                          </div>
+                        </div>
+                        <%= f.submit 'Добавить', :id => 'btn-add-data-to-evaluate',:class => 'btn btn-primary', :name => 'number_page[number]' %>
+
+                    <% end %>
+                </div>
+                <div class="hidden" id="success-message">
+                  Успешно добавлено!
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <h4 id="h-data-to-evaluate">Нажмите на кнопку "Оценка эффективности", чтобы ввести необходимые данные</h4>
+
+        <%= form_for :accuracy, url: search_efficiency_path, method: :post do |f| %>
+            <%= f.text_field :current_user, {:hidden =>"", :value => current_user.email} %>
+            <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+            <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
+
+        <div class="button_container">
+        <button type="submit" class="btn btn-primary btn-lg">Оценка эффективности</button>
+      </div>
+        <% end %>
+        <hr>
+        <%= form_for :number_page, method: :post,:html=> {:id => 'form-page-number'} do |f| %>
+
+            <%= f.text_field :query_string, {:hidden =>"", :value => @query_string} %>
+            <%= f.text_field :specify_query, {:hidden =>"", :value =>  @specify_query} %>
+            <%= f.submit '1', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '2', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '3', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '4', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+            <%= f.submit '5', :class => 'btn btn-primary', :name => 'number_page[number]' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-8">
+
+    </div>
+    <!-- /.row -->
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Made by Aleksey Morozov </p>
+        </div>
+      </div>
+      <!-- /.row -->
+    </footer>
+
+  </div>
+</div>
+
+<!-- /.container -->

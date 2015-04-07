@@ -11,3 +11,101 @@ body {
 footer {
   margin: 50px 0;
 }
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  width: 100%;
+}
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 18px;
+  font-weight: 200;
+}
+.radio-inline, .checkbox-inline {
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 15px;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.form-control {
+  color: #333;
+}
+.form-control-efficiency {
+  display: block;
+  width: 25%;
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: 23%;
+}
+.button_container {
+  text-align: center;
+}
+.col-lg-12 {
+    text-align: center;
+    width: 68%;
+}
+.question {
+  margin-bottom: 15px;
+}
+#search-region {
+  A:visited { color: red! important }
+}
+.evaluate {
+  width: 210px;
+  margin-left: 28%;
+}
+.header {
+  text-align: center;
+}
+.auth_reg {
+//  margin-left: 38%;
+}
+#success-message {
+  color:green
+}
+#error-message {
+  color: red
+}
+#authorization-region {
+  text-align: center;
+}
+#form-page-number {
+  text-align: center;
+}
+#data-modal-button {
+  margin-left: 37%;
+}
+#add-data-to-query {
+
+//  text-align: center;
+}
+.modal-dialog {
+  width: 456px;
+}
+#btn-add-data-to-evaluate {
+  margin-left: 43%;
+}
+#h-data-to-evaluate {
+  font-style: italic;
+  text-align: center;
+}
+#info-user {
+  position: relative;
+  color: white;
+  margin-left: 61%;
+}
+#error-count {
+  color:red;
+}
+.white-background {
+  background-color: white;
+}
+
+

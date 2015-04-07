@@ -1,0 +1,90 @@
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- Blog Post Content Column -->
+    <div class="col-lg-8">
+
+      <!-- Title -->
+      <h1 class="header">Система оценки эффективности поиска научной информации</h1>
+      <div id="search-efficient-query-region">
+           <hr>
+          <h2>Информация о запросе:</h2>
+          <p>Ваш запрос: <%= @query_string %> </p>
+          <% if defined? @error_message %>
+              <p id="error-count">Ошибка:<%= @error_message%> </p>
+              <p id="error-count"> Вернитесь назад и заполните информацию по всем страницам!</p>
+              <a href="#" onclick="window.history.back();return false;">Назад</a>
+          <% else %>
+              <p>Первая страница: релевантных документов <%= @page1[0].number_relevant %>; всего документов на странице: <%= @page1[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page2[0].number_relevant %>; всего документов на странице: <%= @page2[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page3[0].number_relevant %>; всего документов на странице: <%= @page3[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page4[0].number_relevant %>; всего документов на странице: <%= @page4[0].number_all %> </p>
+              <p>Первая страница: релевантных документов <%= @page5[0].number_relevant %>; всего документов на странице: <%= @page5[0].number_all %> </p>
+               <hr>
+
+              <h2>Показатели поиска:</h2>
+                    <h4>Коэффициент релевантности поиска: <%= @relevant_coefficient %>%</h4>
+                     <h4>Средний коэффициент точности: <%= @average_accuracy %>%</h4>
+
+              <hr>
+              <h3>Точность поиска</h3>
+            <div class="question">
+              <h4>Показать график коэффициента точности по страницам?</h4>
+              <input type="radio" checked="checked" id ="check_author_yes" name="accuracy"/>да
+              <input type="radio" id ="check_author_no" name="accuracy" checked/>нет
+              <br>
+            </div>
+            <div class="" id="columnchart_values" style="width: 900px; height: 300px;"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="question">
+              <h4>Сравнить коэффициент релевантности с другим аналогичным запросом?</h4>
+              <input type="radio" checked="checked" id ="check_author_yes" name="comparison_relevant"/>да
+              <input type="radio" id ="check_author_no" name="comparison_relevant" checked/>нет
+              <br>
+              <select class="selectpicker" id="comparison_query" data-live-search="true" title='Выберите запрос'>
+                <option></option>
+                <% @comparison_relevant_query.each do |query| %>
+                    <option> <%= query[:query] %> </option>
+                <% end %>
+              </select>
+              <div class="" id="columnchart_relevance_values" style="width: 900px; height: 300px;"></div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+            </div>
+          <% end %>
+      </div>
+      <hr>
+    </div>
+
+    <div class="col-lg-8">
+
+    </div>
+    <!-- /.row -->
+    <!-- Footer -->
+    <footer>
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Made by Aleksey Morozov </p>
+        </div>
+      </div>
+      <!-- /.row -->
+    </footer>
+
+  </div>
+</div>
+
+
+
+<!-- /.container -->
+

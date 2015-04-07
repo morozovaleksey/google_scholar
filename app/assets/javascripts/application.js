@@ -12,13 +12,12 @@
 //
 //= require jquery/dist/jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require underscore/underscore
 //= require moment/moment
 //= require bootstrap/dist/js/bootstrap
 
 //= require bootstrap-select/dist/js/bootstrap-select
-
+//= require js-routes
 // Backbone
 //= require backbone/backbone
 //= require marionette/lib/backbone.marionette
